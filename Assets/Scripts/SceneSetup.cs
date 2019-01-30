@@ -48,6 +48,14 @@ public class SceneSetup : MonoBehaviour
         // (1) One at the backward end of the maze
         RearTeleport.transform.position = new Vector3(bounds.min.x - hysteresis,0.0f,0.0f);
         RearTeleportTarget.transform.position = new Vector3(bounds.max.x  - hysteresis,0.0f,0.0f);
+
+        // Debug.Log("displays connected: " + Display.displays.Length);
+        // // Display.displays[0] is the primary, default display and is always ON.
+        // // Check if additional displays are available and activate each.
+        // if (Display.displays.Length > 1)
+        //     Display.displays[1].Activate();
+        // if (Display.displays.Length > 2)
+        //     Display.displays[2].Activate();
     }
 
     // Update is called once per frame
