@@ -13,7 +13,7 @@ public class EndWrapTeleport : MonoBehaviour
     void Start ()
     {
         playerInitialPos = player.transform.position; // Players never move in y or z
-        playerOffset = player.GetComponent<Renderer>().bounds.extents.x;
+        playerOffset = player.GetComponent<Renderer>().bounds.extents.x; // extents= 1/2 full width
     }
 
     void OnTriggerEnter(Collider Other)
