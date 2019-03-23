@@ -38,7 +38,11 @@ public class PlayerController : MonoBehaviour
 
         // SendUDPString(transform.position.x.ToString());
 
-        foreach (var message in receiver.getMessages()) Debug.Log(message);
+        Int16 udpMovement = receiver.getMovement();
+        //Debug.Log("Got speed: " + udpMovement);
+
+        Vector3 vUdpMovement = new Vector3(udpMovement, 0, 0); // x, y, z
+        transform.position += vUdpMovement * speed;
 
     }
     void OnDestroy()

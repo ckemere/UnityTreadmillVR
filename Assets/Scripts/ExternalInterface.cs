@@ -9,7 +9,7 @@ using System.Threading;
 using UnityEngine;
 using System.Runtime.InteropServices;
 
-[StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Sequential, Pack=1)]
 public struct UDPMovementData
 {
     public UInt32 timestamp;
@@ -60,16 +60,14 @@ public class UdpReceiver
             try
             {
                 Byte[] receiveBytes = client.Receive(ref remoteIpEndPoint); // Blocks until a message returns on this socket from a remote host.
-                //string returnData = Encoding.UTF8.GetString(receiveBytes);
-
                 // Parse receive bytes from movement data structure
                 UDPMovementData[] receivedData = FromByteArray<UDPMovementData>(receiveBytes);
 
                 lock (incomingMovementQueue)
                 {
-                    for (int i = 0; i < receivedData.Length; i++)
+                    for (int i = 0; i < receivedData.Length; i++) {
                         incomingMovementQueue.Enqueue(receivedData[i].speed);
-                    //incomingQueue.Enqueue(returnData);
+                    }
                 }
             }
             catch (SocketException e)
@@ -114,6 +112,7 @@ public class UdpReceiver
     }
 
 
+    // https://stackoverflow.com/questions/25311361/copy-array-to-struct-array-as-fast-as-possible-in-c-sharp
     private static T[] FromByteArray<T>(byte[] source) where T : struct
     {
         T[] destination = new T[source.Length / Marshal.SizeOf(typeof(T))];

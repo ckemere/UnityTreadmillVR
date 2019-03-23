@@ -18,11 +18,10 @@ import threading
 import time
 import signal
 import struct
-#import os
 
 
 # INTERVAL = 0.01
-INTERVAL = 0.1
+INTERVAL = 0.02
 SLACK = 0.005
 
 timestamp = 0
@@ -40,15 +39,12 @@ try:
         timestamp = timestamp + int(INTERVAL * 1000)
         spd = speed[idx]
         bytesToSend = struct.pack('Ih', timestamp, spd)
-        #bytesToSend = timestamp.to_bytes(4, byteorder = sys.byteorder)
-        #bytesToSend += spd.to_bytes(2, byteorder = sys.byteorder)
         # bytesToSend = str.encode("Hello UDP Server {}".format(t))
         UDPClientSocket.sendto(bytesToSend, serverAddressPort)
         idx = idx + 1;
-        if (idx > len(speed)):
+        if (idx >= len(speed)):
             idx = 0
 
 
 except (KeyboardInterrupt, SystemExit):
     print('Quitting')
-    #UDPClientSocket.cleanup()
